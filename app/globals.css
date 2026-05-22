@@ -12,10 +12,36 @@
   /* Slate 400 */
   --color-accent: #34d399;
   /* Emerald 400 */
+
+  /* Warna Kategori Unsur */
+  --cat-nonmetal: #1e3a8a;
+  /* Biru Gelap */
+  --cat-noble-gas: #581c87;
+  /* Ungu */
+  --cat-alkali-metal: #7f1d1d;
+  /* Merah */
+  --cat-alkaline-earth: #78350f;
+  /* Oranye Tua */
+  --cat-metalloid: #065f46;
+  /* Hijau Tua */
+  --cat-halogen: #115e59;
+  /* Toska */
+  --cat-transition-metal: #3f3f46;
+  /* Abu-abu */
+  --cat-post-transition: #14532d;
+  /* Hijau Rumput */
+  --cat-lanthanide: #7c2d12;
+  /* Cokelat Bata */
+  --cat-actinide: #4c1d95;
+  /* Indigo */
 }
 
 /* Jika nanti butuh fitur alternative theme, tinggal buat class baru di sini */
 .light-theme {
   --bg-main: #ffffff;
   --text-main: #000000;
+}
+
+@utility grid-cols-18 {
+  grid-template-columns: repeat(18, minmax(0, 1fr));
 }
