@@ -1,47 +1,148 @@
 @import "tailwindcss";
 
 :root {
-  /* Warna Utama Aplikasi */
-  --bg-main: #0f172a;
-  /* Slate 900 */
-  --bg-card: #1e293b;
-  /* Slate 800 */
-  --text-main: #f8fafc;
-  /* Slate 50 */
-  --text-muted: #94a3b8;
-  /* Slate 400 */
-  --color-accent: #34d399;
-  /* Emerald 400 */
+  /* --- WARNA UTAMA APLIKASI (MODE GELAP - BAWAAN) --- */
+  --bg-main: #0b0f19;         /* Biru malam gelap elegan */
+  --bg-card: #151d30;         /* Biru malam abu-abu solid */
+  --text-main: #f8fafc;       /* Slate 50 */
+  --text-muted: #94a3b8;      /* Slate 400 */
+  --color-accent: #10b981;    /* Emerald Green */
 
-  /* Warna Kategori Unsur */
-  --cat-nonmetal: #1e3a8a;
-  /* Biru Gelap */
-  --cat-noble-gas: #581c87;
-  /* Ungu */
-  --cat-alkali-metal: #7f1d1d;
-  /* Merah */
-  --cat-alkaline-earth: #78350f;
-  /* Oranye Tua */
-  --cat-metalloid: #065f46;
-  /* Hijau Tua */
-  --cat-halogen: #115e59;
-  /* Toska */
-  --cat-transition-metal: #3f3f46;
-  /* Abu-abu */
-  --cat-post-transition: #14532d;
-  /* Hijau Rumput */
-  --cat-lanthanide: #7c2d12;
-  /* Cokelat Bata */
-  --cat-actinide: #4c1d95;
-  /* Indigo */
+  /* --- SPANDUK & ALERT GAME (MODE GELAP) --- */
+  --bg-alert: rgba(245, 158, 11, 0.1); /* Amber 500 transparan */
+  --border-alert: rgba(245, 158, 11, 0.3);
+  --text-alert-title: #fbbf24; /* Amber 400 */
+  --text-alert-desc: #d1d5db;  /* Gray 300 */
+  --text-alert-bold: #f59e0b;  /* Amber 500 */
+
+  /* --- DECK UNTUR & PANEL (MODE GELAP) --- */
+  --bg-deck: rgba(21, 29, 48, 0.85);
+  --border-deck: #1e293b;
+  --text-deck-title: #94a3b8;
+
+  /* --- GRID SLOT KOSONG (MODE GELAP) --- */
+  --bg-slot: rgba(15, 23, 42, 0.6);
+  --border-slot: rgba(30, 41, 59, 0.8);
+  --text-slot-num: rgba(148, 163, 184, 0.4);
+
+  /* --- WARNA KATEGORI UNSUR (SOLID UNTUK DARK MODE) --- */
+  --cat-nonmetal: #0f766e;          /* Biru Teal Sejuk */
+  --cat-noble-gas: #701a75;         /* Ungu Violet Tua */
+  --cat-alkali-metal: #991b1b;      /* Merah Crimson */
+  --cat-alkaline-earth: #c2410c;    /* Oranye Bata Pekat (Membedakan dari Lantanida Cokelat Bata) */
+  --cat-metalloid: #15803d;         /* Hijau Hutan */
+  --cat-halogen: #0369a1;           /* Biru Langit Tua */
+  --cat-transition-metal: #4b5563;  /* Abu Baja Slate */
+  --cat-post-transition: #1e3a8a;   /* Biru Safir Gelap */
+  --cat-lanthanide: #be185d;        /* Pink Crimson / Rose (Membedakan dari Alkali Tanah Cokelat) */
+  --cat-actinide: #78350f;          /* Cokelat Amber Karamel (Membedakan dari Gas Mulia Indigo/Ungu) */
 }
 
-/* Jika nanti butuh fitur alternative theme, tinggal buat class baru di sini */
+/* --- TOKENS WARNA UNTUK MODE HANGAT (COZY WARM SEPIA) --- */
 .light-theme {
-  --bg-main: #ffffff;
-  --text-main: #000000;
+  --bg-main: #FAF6EE;         /* Krem Alabaster hangat yang sangat nyaman di mata */
+  --bg-card: #F5F0E1;         /* Krem Almond hangat */
+  --text-main: #2D1A04;       /* Espresso Cokelat Pekat - Kontras Maksimal */
+  --text-muted: #725E4A;      /* Cokelat Sepia Muted */
+  --color-accent: #047857;    /* Emerald Green Gelap */
+
+  /* --- SPANDUK & ALERT GAME (MODE HANGAT) --- */
+  --bg-alert: #FEF3C7;        /* Amber 100 - Kuning hangat kontras */
+  --border-alert: #F59E0B;    /* Amber 500 */
+  --text-alert-title: #78350F; /* Amber 900 - Cokelat Tua */
+  --text-alert-desc: #92400E;  /* Amber 800 */
+  --text-alert-bold: #B45309;  /* Amber 700 */
+
+  /* --- DECK UNTUR & PANEL (MODE HANGAT) --- */
+  --bg-deck: #EADDC3;         /* Cokelat Pastel hangat */
+  --border-deck: #D7C9A9;
+  --text-deck-title: #5C442C;
+
+  /* --- GRID SLOT KOSONG (MODE HANGAT) --- */
+  --bg-slot: #F4EFDB;
+  --border-slot: #DCD3B8;
+  --text-slot-num: #8C765C;
+  
+  /* --- WARNA KATEGORI UNSUR (WARM ADAPTIVE UNTUK MODE HANGAT) --- */
+  --cat-nonmetal: #2e8b81;          /* Teal Lembut */
+  --cat-noble-gas: #a23ba2;         /* Ungu Violet Pastel */
+  --cat-alkali-metal: #c94040;      /* Merah Pastel */
+  --cat-alkaline-earth: #e06a3b;    /* Oranye Pastel (Membedakan dari Lantanida Teracotta) */
+  --cat-metalloid: #3c9a58;         /* Hijau Sage Lembut */
+  --cat-halogen: #3a8ec1;           /* Biru Pastel Lembut */
+  --cat-transition-metal: #6b7280;  /* Abu Slate */
+  --cat-post-transition: #4361ee;   /* Biru Navy Pastel */
+  --cat-lanthanide: #db4a85;        /* Pink Rose Pastel Lembut (Membedakan dari Alkali Tanah) */
+  --cat-actinide: #8f5415;          /* Cokelat Karamel Lembut (Membedakan dari Gas Mulia) */
 }
 
 @utility grid-cols-18 {
   grid-template-columns: repeat(18, minmax(0, 1fr));
+}
+
+/* Animasi Rontok Hancur Jatuh ke Bawah */
+@keyframes game-fall {
+  0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; filter: brightness(1) blur(0); }
+  15% { transform: translateY(-12px) scale(1.05); opacity: 1; filter: brightness(1.4); }
+  100% { transform: translateY(350px) rotate(60deg) scale(0.1); opacity: 0; filter: brightness(0.5) blur(1px); }
+}
+
+.animate-fall {
+  animation: game-fall 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* --- ANIMASI GAME PREMIUM --- */
+@keyframes game-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+@keyframes game-success-pop {
+  0% { transform: scale(0.8); filter: brightness(1.8); }
+  50% { transform: scale(1.15); filter: brightness(1.3); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+
+@keyframes game-pulse-gold {
+  0%, 100% { box-shadow: 0 0 4px rgba(234, 179, 8, 0.4); border-color: rgba(234, 179, 8, 0.5); }
+  50% { box-shadow: 0 0 16px rgba(234, 179, 8, 0.9); border-color: rgba(234, 179, 8, 0.9); }
+}
+
+@keyframes game-slide-up {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-shake {
+  animation: game-shake 0.25s ease-in-out;
+}
+
+.animate-success-pop {
+  animation: game-success-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.animate-pulse-gold {
+  animation: game-pulse-gold 1.5s infinite alternate;
+}
+
+.animate-slide-up {
+  animation: game-slide-up 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Custom Scrollbar untuk Deck Unsur */
+.custom-scrollbar::-webkit-scrollbar {
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: var(--bg-main);
+  border-radius: 99px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  opacity: 0.3;
+  border-radius: 99px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
 }
