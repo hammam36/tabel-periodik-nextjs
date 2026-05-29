@@ -1,4 +1,4 @@
-import { X, Award, Layers, Hash } from "lucide-react";
+import { X, Scale, Layers, Hash } from "lucide-react";
 
 export default function ElementModal({ element, onClose }) {
     if (!element) return null;
@@ -33,7 +33,7 @@ export default function ElementModal({ element, onClose }) {
                 <div className="border-t border-[var(--border-deck)] pt-4 text-left space-y-3 text-sm">
                     <div className="flex justify-between items-center py-1 border-b border-[var(--border-deck)]/50">
                         <span className="text-[var(--text-muted)] flex items-center gap-2 font-medium">
-                            <Award size={16} className="text-emerald-600 dark:text-emerald-400" /> Massa Atom
+                            <Scale size={16} className="text-emerald-600 dark:text-emerald-400" /> Massa Atom (Berat Atom)
                         </span>
                         <span className="font-mono font-bold text-[var(--text-main)]">{element.mass} u</span>
                     </div>
