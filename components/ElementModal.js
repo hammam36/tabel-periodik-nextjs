@@ -1,4 +1,4 @@
-import { X, Scale, Layers, Hash } from "lucide-react";
+import { X, Scale, Layers, Hash, Columns } from "lucide-react";
 
 const CATEGORY_LABELS = {
   "nonmetal": "Nonlogam Lainnya",
@@ -13,8 +13,17 @@ const CATEGORY_LABELS = {
   "actinide": "Aktinida"
 };
 
-export default function ElementModal({ element, onClose }) {
+export default function ElementModal({ 
+  element, 
+  onClose, 
+  compareElements = [], 
+  onAddToCompare, 
+  onRemoveFromCompare 
+}) {
     if (!element) return null;
+
+    const isCompared = compareElements.some(el => el.number === element.number);
+    const isCompareFull = compareElements.length >= 3;
 
     return (
         <div className="fixed inset-0 bg-black/70 dark:bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
@@ -70,6 +79,35 @@ export default function ElementModal({ element, onClose }) {
                 <div className="mt-4 p-3 bg-slate-950/5 dark:bg-slate-950/40 rounded-xl text-left text-xs text-[var(--text-muted)] leading-relaxed border border-[var(--border-deck)]">
                     <span className="font-bold text-[var(--text-main)]/90 block mb-1">Catatan Karakteristik:</span>
                     Unsur ini diklasifikasikan sebagai kelompok <span className="font-semibold text-[var(--text-main)]">{element.category.replace("-", " ")}</span> yang memiliki konfigurasi elektron dan karakteristik kimia yang unik di dalam tabel periodik.
+                </div>
+
+                {/* Tombol Aksi Bandingkan */}
+                <div className="mt-5 pt-4 border-t border-[var(--border-deck)]/40 flex flex-col items-center gap-2">
+                    {isCompared ? (
+                        <button
+                            onClick={() => onRemoveFromCompare(element.number)}
+                            className="w-full py-2.5 bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs rounded-xl shadow-md transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-2"
+                        >
+                            <Columns size={14} /> Hapus dari Perbandingan
+                        </button>
+                    ) : (
+                        <button
+                            onClick={() => onAddToCompare(element)}
+                            disabled={isCompareFull}
+                            className={`w-full py-2.5 font-bold text-xs rounded-xl transition-all cursor-pointer flex items-center justify-center gap-2 ${
+                                isCompareFull
+                                    ? "bg-slate-700/40 text-slate-500 border border-slate-700/50 cursor-not-allowed"
+                                    : "bg-gradient-to-r from-[var(--color-accent)] to-[var(--color-accent)]/85 hover:from-[var(--color-accent)]/90 hover:to-[var(--color-accent)] text-white shadow-md active:scale-95"
+                            }`}
+                        >
+                            <Columns size={14} /> Bandingkan Unsur
+                        </button>
+                    )}
+                    {isCompareFull && !isCompared && (
+                        <span className="text-[10px] text-rose-500 font-medium animate-pulse">
+                          Batas maksimal perbandingan adalah 3 unsur.
+                        </span>
+                    )}
                 </div>
 
             </div>

@@ -1,9 +1,10 @@
 'use client';
 
 import { useState, useEffect, useRef } from "react";
-import { Sun, Moon, RotateCcw, Play, Search, X, Sliders } from "lucide-react";
+import { Sun, Moon, RotateCcw, Play, Search, X, Sliders, Columns } from "lucide-react";
 import ElementModal from "@/components/ElementModal";
 import PeriodicGame from "@/components/PeriodicGame";
+import ComparisonModal from "@/components/ComparisonModal";
 import { getShellsForElement } from "@/components/shellsData";
 
 // Daftar kategori penentu filter & legenda (Sesuai gambar referensi Anda)
@@ -50,6 +51,24 @@ export default function HomePage() {
 
   // State untuk Sidebar Drawer Modal
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  // State untuk perbandingan unsur (Opsi 3)
+  const [compareElements, setCompareElements] = useState([]);
+  const [isComparisonModalOpen, setIsComparisonModalOpen] = useState(false);
+
+  const handleAddToCompare = (el) => {
+    if (compareElements.some(item => item.number === el.number)) return;
+    if (compareElements.length >= 3) return;
+    setCompareElements((prev) => [...prev, el]);
+  };
+
+  const handleRemoveFromCompare = (number) => {
+    setCompareElements((prev) => prev.filter((item) => item.number !== number));
+  };
+
+  const handleResetCompare = () => {
+    setCompareElements([]);
+  };
 
   // Tracker pergerakan mouse untuk floating tooltip
   const handleMouseMove = (e) => {
@@ -178,7 +197,7 @@ export default function HomePage() {
   }
 
   return (
-    <main className="min-h-screen bg-[var(--bg-main)] text-[var(--text-main)] p-6 transition-colors duration-300">
+    <main className={`min-h-screen bg-[var(--bg-main)] text-[var(--text-main)] p-6 transition-colors duration-300 ${compareElements.length > 0 ? "pb-32" : ""}`}>
 
       {/* PROTEKSI MOBILE */}
       <div className="block md:hidden text-center pt-20 px-4">
@@ -357,8 +376,8 @@ export default function HomePage() {
               </div>
 
               {/* Label Sumbu Periode (Kiri) */}
-              <div 
-                className="absolute left-0 top-12 bottom-4 flex flex-col items-center justify-center gap-2 pointer-events-none select-none" 
+              <div
+                className="absolute left-0 top-12 bottom-4 flex flex-col items-center justify-center gap-2 pointer-events-none select-none"
                 style={{ writingMode: "vertical-lr" }}
               >
                 <span className="w-[1px] flex-1 bg-gradient-to-b from-transparent via-[var(--color-accent)]/20 to-transparent" />
@@ -368,10 +387,9 @@ export default function HomePage() {
                 <span className="w-[1px] flex-1 bg-gradient-to-b from-transparent via-[var(--color-accent)]/20 to-transparent" />
               </div>
 
-              <section 
-                className={`grid grid-cols-19 gap-1.5 p-4 bg-slate-950/10 dark:bg-slate-950/30 rounded-2xl border border-[var(--border-deck)] shadow-inner transition-all duration-300 ${
-                  advancedMode ? "advanced-grid-mode border-cyan-500/30 shadow-[0_0_30px_rgba(6,182,212,0.1)_inset]" : ""
-                }`}
+              <section
+                className={`grid grid-cols-19 gap-1.5 p-4 bg-slate-950/10 dark:bg-slate-950/30 rounded-2xl border border-[var(--border-deck)] shadow-inner transition-all duration-300 ${advancedMode ? "advanced-grid-mode border-cyan-500/30 shadow-[0_0_30px_rgba(6,182,212,0.1)_inset]" : ""
+                  }`}
               >
                 {/* Indikator Arah Koordinat Kuantum */}
                 <div
@@ -475,7 +493,7 @@ export default function HomePage() {
                     <div className="w-6 h-6 rounded-full bg-[var(--color-accent)]/10 border border-[var(--color-accent)]/40 flex items-center justify-center animate-hud-pulse">
                       <div className="w-2.5 h-2.5 rounded-full bg-[var(--color-accent)] shadow-[0_0_10px_var(--color-accent)]" />
                     </div>
-                    
+
                     {/* Glowing scanning radar sweep */}
                     <svg className="absolute w-24 h-24 text-[var(--color-accent)]/15" viewBox="0 0 100 100">
                       <line x1="50" y1="5" x2="50" y2="95" stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 2" />
@@ -569,7 +587,7 @@ export default function HomePage() {
                 {/* 5. Render Unsur / Kotak Tabel Periodik */}
                 {elements.map((el) => {
                   const isMatch = (!activeFilter || el.category === activeFilter) && matchesSearch(el);
-                  
+
                   // Evaluasi hover highlight & coordinates
                   const isHovered = hoveredElement && hoveredElement.number === el.number;
                   const isSameGroup = hoveredElement && el.row <= 7 && hoveredElement.col === el.col && highlightGroup;
@@ -631,18 +649,18 @@ export default function HomePage() {
                       <span className={`text-white/70 self-start font-mono font-bold leading-none drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)] ${hasShells ? "text-[8px]" : "text-[9px]"}`}>
                         {el.number}
                       </span>
-                      
+
                       {/* Simbol Kimia */}
                       <span className={`font-black text-white tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)] transition-all ${hasShells ? "text-[15px]" : "text-lg"}`}>
                         {el.symbol}
                       </span>
-                      
+
                       {/* Nama Unsur & Dynamic Mass Display */}
                       <div className="flex flex-col items-center justify-end w-full leading-none text-center">
                         <span className={`font-bold text-white/95 truncate max-w-full drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)] ${hasShells ? "text-[7.5px]" : "text-[8px]"}`}>
                           {el.name}
                         </span>
-                        
+
                         {(showAtomicMass || advancedMode) && (
                           <span className={`font-mono text-white/80 drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)] mt-0.5 leading-none ${hasShells ? "text-[6px]" : "text-[6.5px]"}`}>
                             {el.mass} u
@@ -703,19 +721,84 @@ export default function HomePage() {
             <ElementModal
               element={selectedElement}
               onClose={() => setSelectedElement(null)}
+              compareElements={compareElements}
+              onAddToCompare={handleAddToCompare}
+              onRemoveFromCompare={handleRemoveFromCompare}
             />
+
+            {/* FLOATING COMPARE BAR */}
+            {compareElements.length > 0 && !isComparisonModalOpen && (
+              <div className="glass-compare-bar animate-slide-up-dock p-4 flex items-center justify-between gap-4">
+                <div className="flex items-center gap-4 py-1">
+                  <span className="text-xs font-mono font-bold text-[var(--color-accent)] shrink-0 uppercase tracking-wider flex items-center gap-1.5">
+                    <Columns size={14} /> Bandingkan ({compareElements.length}/3):
+                  </span>
+                  <div className="flex items-center gap-3">
+                    {compareElements.map((el) => (
+                      <div
+                        key={`compare-avatar-${el.number}`}
+                        style={{ backgroundColor: `var(--cat-${el.category})` }}
+                        className="compare-avatar shrink-0 border border-white/20 select-none cursor-pointer"
+                        onClick={() => setSelectedElement(el)}
+                        title={`Lihat detail ${el.name}`}
+                      >
+                        <span className="text-[8px] text-white/80 font-mono absolute top-0.5 left-1 leading-none">
+                          {el.number}
+                        </span>
+                        <span className="text-sm font-black text-white drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]">
+                          {el.symbol}
+                        </span>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleRemoveFromCompare(el.number);
+                          }}
+                          className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-slate-900 text-white hover:bg-rose-600 flex items-center justify-center border border-white/10 text-[9px] font-bold shadow-md transition-colors"
+                          title="Hapus"
+                        >
+                          <X size={10} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0">
+                  <button
+                    onClick={handleResetCompare}
+                    className="px-3 py-1.5 text-xs border border-[var(--border-deck)] hover:bg-[var(--bg-deck)] text-[var(--text-muted)] hover:text-[var(--text-main)] rounded-lg transition-colors cursor-pointer"
+                  >
+                    Batal
+                  </button>
+                  <button
+                    onClick={() => setIsComparisonModalOpen(true)}
+                    className="px-4 py-1.5 text-xs bg-gradient-to-r from-[var(--color-accent)] to-[var(--color-accent)]/90 hover:from-[var(--color-accent)]/90 hover:to-[var(--color-accent)] text-white font-bold rounded-lg shadow-md transition-all active:scale-95 cursor-pointer flex items-center gap-1.5"
+                  >
+                    <Columns size={13} /> Bandingkan Sekarang
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* MODAL PERBANDINGAN */}
+            {isComparisonModalOpen && (
+              <ComparisonModal
+                compareElements={compareElements}
+                onClose={() => setIsComparisonModalOpen(false)}
+                onRemoveElement={handleRemoveFromCompare}
+              />
+            )}
 
             {/* --- SLIDE-OUT HUD CONTROL SIDEBAR DRAWER MODAL --- */}
             {isSidebarOpen && (
-              <div 
-                className="hud-sidebar-backdrop animate-fade-in" 
+              <div
+                className="hud-sidebar-backdrop animate-fade-in"
                 onClick={() => setIsSidebarOpen(false)}
               />
             )}
-            <div 
-              className={`hud-sidebar p-6 flex flex-col justify-between ${
-                isSidebarOpen ? "translate-x-0" : "translate-x-full"
-              }`}
+            <div
+              className={`hud-sidebar p-6 flex flex-col justify-between ${isSidebarOpen ? "translate-x-0" : "translate-x-full"
+                }`}
             >
               <div>
                 {/* Sidebar Header */}
