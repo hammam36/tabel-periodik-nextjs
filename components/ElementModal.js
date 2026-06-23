@@ -1,5 +1,18 @@
 import { X, Scale, Layers, Hash } from "lucide-react";
 
+const CATEGORY_LABELS = {
+  "nonmetal": "Nonlogam Lainnya",
+  "noble-gas": "Gas Mulia",
+  "alkali-metal": "Logam Alkali",
+  "alkaline-earth": "Logam Alkali Tanah",
+  "metalloid": "Metaloid",
+  "halogen": "Halogen",
+  "transition-metal": "Logam Transisi",
+  "post-transition": "Pasca-Transisi",
+  "lanthanide": "Lantanida",
+  "actinide": "Aktinida"
+};
+
 export default function ElementModal({ element, onClose }) {
     if (!element) return null;
 
@@ -26,7 +39,7 @@ export default function ElementModal({ element, onClose }) {
 
                 <h2 className="text-2xl font-black text-[var(--text-main)] mb-1">{element.name}</h2>
                 <p className="text-xs text-[var(--color-accent)] uppercase tracking-widest font-extrabold mb-6">
-                    {element.category.replace("-", " ")}
+                    {CATEGORY_LABELS[element.category] || element.category.replace("-", " ")}
                 </p>
 
                 {/* Informasi Detail Unsur (Sangat Dinamis) */}

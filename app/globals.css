@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: "Geist", Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "Geist Mono", SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+}
+
 :root {
   /* --- WARNA UTAMA APLIKASI (MODE GELAP - BAWAAN) --- */
   --bg-main: #0b0f19;         /* Biru malam gelap elegan */
@@ -80,6 +85,10 @@
   grid-template-columns: repeat(18, minmax(0, 1fr));
 }
 
+@utility grid-cols-19 {
+  grid-template-columns: 2rem repeat(18, minmax(0, 1fr));
+}
+
 /* Animasi Rontok Hancur Jatuh ke Bawah */
 @keyframes game-fall {
   0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; filter: brightness(1) blur(0); }
@@ -145,4 +154,233 @@
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: var(--color-accent);
+}
+
+/* --- FUTURISTIC SCI-FI HUD GLOW STYLES --- */
+.hud-panel {
+  background: rgba(13, 20, 35, 0.45);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  box-shadow: 0 0 25px rgba(6, 182, 212, 0.05), inset 0 0 20px rgba(6, 182, 212, 0.05);
+  border-radius: 1rem;
+}
+.light-theme .hud-panel {
+  background: rgba(245, 240, 225, 0.6);
+  border: 1px solid rgba(4, 120, 87, 0.2);
+  box-shadow: 0 0 25px rgba(4, 120, 87, 0.05), inset 0 0 20px rgba(4, 120, 87, 0.03);
+}
+
+/* Smart Sidebar Drawer */
+.hud-sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 23rem;
+  background: rgba(10, 16, 28, 0.85);
+  backdrop-filter: blur(24px);
+  border-left: 1px solid rgba(6, 182, 212, 0.25);
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5), -5px 0 25px rgba(6, 182, 212, 0.1);
+  z-index: 50;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.light-theme .hud-sidebar {
+  background: rgba(245, 240, 225, 0.92);
+  border-left: 1px solid rgba(4, 120, 87, 0.25);
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.12), -5px 0 25px rgba(4, 120, 87, 0.06);
+}
+
+.hud-sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+  z-index: 40;
+  transition: opacity 0.3s ease;
+}
+
+/* Central HUD Diagnostic Panel */
+.hud-diagnostic {
+  background: rgba(13, 20, 35, 0.3);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(6, 182, 212, 0.15);
+  box-shadow: 0 0 25px rgba(6, 182, 212, 0.03) inset;
+  border-radius: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+.light-theme .hud-diagnostic {
+  background: rgba(245, 240, 225, 0.45);
+  border: 1px solid rgba(4, 120, 87, 0.15);
+  box-shadow: 0 0 25px rgba(4, 120, 87, 0.02) inset;
+}
+
+/* Sci-Fi Scanner Graphics */
+@keyframes hud-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-hud-spin {
+  animation: hud-spin 15s linear infinite;
+}
+
+@keyframes hud-pulse {
+  0%, 100% { opacity: 0.25; transform: scale(1); }
+  50% { opacity: 0.65; transform: scale(1.05); }
+}
+.animate-hud-pulse {
+  animation: hud-pulse 4s ease-in-out infinite;
+}
+
+/* Smart Coordinate Labels */
+.hud-coord-label {
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  opacity: 0.35;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hud-coord-label.coordinate-active {
+  opacity: 1;
+  color: var(--color-accent);
+  text-shadow: 0 0 8px var(--color-accent);
+}
+
+/* Element Hover Highlights */
+.element-card-wrapper {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.element-highlight-active {
+  filter: brightness(1.2) saturate(1.2) contrast(1.1);
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.15);
+}
+.element-hovered {
+  transform: scale(1.15) !important;
+  z-index: 30 !important;
+  box-shadow: 0 0 25px var(--color-accent), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  filter: brightness(1.35) saturate(1.35) !important;
+}
+
+/* High-Density Cyber Grid for Advanced Mode */
+.advanced-grid-mode {
+  background-size: 20px 20px;
+  background-image: 
+    linear-gradient(to right, rgba(6, 182, 212, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(6, 182, 212, 0.03) 1px, transparent 1px);
+  box-shadow: 0 0 30px rgba(6, 182, 212, 0.08) inset;
+  border-color: rgba(6, 182, 212, 0.3) !important;
+}
+.light-theme .advanced-grid-mode {
+  background-image: 
+    linear-gradient(to right, rgba(4, 120, 87, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(4, 120, 87, 0.03) 1px, transparent 1px);
+  box-shadow: 0 0 30px rgba(4, 120, 87, 0.04) inset;
+  border-color: rgba(4, 120, 87, 0.25) !important;
+}
+
+/* s/p/d/f Block Background Highlight Overlays */
+.block-overlay {
+  pointer-events: none;
+  border-radius: 0.75rem;
+  border-width: 1px;
+  border-style: dashed;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0.5rem;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
+}
+.block-overlay span {
+  font-family: var(--font-mono, monospace);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+/* Color Schemes for s/p/d/f Blocks */
+.block-s-glow {
+  background: rgba(239, 68, 68, 0.02);
+  border-color: rgba(239, 68, 68, 0.25);
+  box-shadow: inset 0 0 15px rgba(239, 68, 68, 0.04);
+  color: #ef4444;
+}
+.block-d-glow {
+  background: rgba(245, 158, 11, 0.02);
+  border-color: rgba(245, 158, 11, 0.25);
+  box-shadow: inset 0 0 15px rgba(245, 158, 11, 0.04);
+  color: #f59e0b;
+}
+.block-p-glow {
+  background: rgba(6, 182, 212, 0.02);
+  border-color: rgba(6, 182, 212, 0.25);
+  box-shadow: inset 0 0 15px rgba(6, 182, 212, 0.04);
+  color: #06b6d4;
+}
+.block-f-glow {
+  background: rgba(139, 92, 246, 0.02);
+  border-color: rgba(139, 92, 246, 0.25);
+  box-shadow: inset 0 0 15px rgba(139, 92, 246, 0.04);
+  color: #8b5cf6;
+}
+
+/* Minimal Floating Tooltip */
+.hud-tooltip {
+  background: rgba(10, 15, 30, 0.88);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(6, 182, 212, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(6, 182, 212, 0.15);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  pointer-events: none;
+  z-index: 999;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.light-theme .hud-tooltip {
+  background: rgba(245, 240, 225, 0.92);
+  border: 1px solid rgba(4, 120, 87, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 20px rgba(4, 120, 87, 0.1);
+}
+
+/* Interactive Glass Toggles */
+.hud-toggle-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  background: rgba(30, 41, 59, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  user-select: none;
+}
+.hud-toggle-label:hover {
+  background: rgba(30, 41, 59, 0.4);
+  border-color: rgba(6, 182, 212, 0.3);
+}
+.light-theme .hud-toggle-label {
+  background: rgba(220, 210, 185, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+.light-theme .hud-toggle-label:hover {
+  background: rgba(220, 210, 185, 0.5);
+  border-color: rgba(4, 120, 87, 0.3);
+}
+.hud-toggle-active {
+  background: rgba(6, 182, 212, 0.1) !important;
+  border-color: rgba(6, 182, 212, 0.5) !important;
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.1) !important;
+}
+.light-theme .hud-toggle-active {
+  background: rgba(4, 120, 87, 0.1) !important;
+  border-color: rgba(4, 120, 87, 0.5) !important;
+  box-shadow: 0 0 10px rgba(4, 120, 87, 0.1) !important;
 }
